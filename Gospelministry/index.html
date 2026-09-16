@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GospelMinistryForChrist | Transforming Children's Lives</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        emerald: {
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-color: #0f172a;
+            background-image: radial-gradient(rgba(245, 158, 11, 0.12) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.05) 1px, #0f172a 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-navy-950/95 backdrop-blur-md border-b border-slate-800 text-white transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-navy-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <i data-lucide="cross" class="w-6 h-6 stroke-[2.5]"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span id="site-title-text" class="font-serif font-bold text-lg leading-tight tracking-wider text-amber-400">GOSPEL MINISTRY</span>
+                        <span id="site-subtitle-text" class="text-xs font-semibold uppercase tracking-widest text-slate-300">For Christ</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="#pillars" class="text-slate-300 hover:text-amber-400 transition-colors">Four Pillars</a>
+                    <a href="#sponsor" class="text-slate-300 hover:text-amber-400 transition-colors">Sponsor a Child</a>
+                    <a href="#reports" class="text-slate-300 hover:text-amber-400 transition-colors">Reports & Updates</a>
+                    <a href="#gallery" class="text-slate-300 hover:text-amber-400 transition-colors">Gallery</a>
+                    <a href="#prayer-wall" class="text-slate-300 hover:text-amber-400 transition-colors">Prayer Wall</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="toggleAdminModal()" class="px-3.5 py-2 rounded-lg text-xs font-medium border border-slate-700 hover:border-amber-500 text-slate-300 hover:text-amber-400 transition-all flex items-center gap-1.5 relative">
+                        <i data-lucide="user-check" class="w-4 h-4"></i>
+                        <span id="admin-btn-label">Staff / Admin Login</span>
+                        <span id="admin-badge" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+                    </button>
+                    <button onclick="openDonateModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-navy-950 font-bold text-sm shadow-md shadow-amber-500/20 hover:shadow-lg transition-all transform active:scale-95 flex items-center gap-2">
+                        <i data-lucide="heart" class="w-4 h-4 fill-navy-950"></i>
+                        <span>Donate Now</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative hero-pattern text-white py-20 lg:py-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Faith in Action for the Next Generation
+                    </div>
+
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Nurturing Children <br class="hidden sm:inline">
+                        <span class="gold-gradient-text">Spiritually, Educationally, Economically & Socially</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        At <strong class="text-white font-semibold">GospelMinistryForChrist</strong>, we believe every child deserves Christ-centered love, complete educational support, nutritional security, and community mentorship.
+                    </p>
+
+                    <div class="pt-2 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#sponsor" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-navy-950 font-bold text-base shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>Sponsor a Child Today</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#reports" class="px-7 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-base transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i>
+                            <span>Read Latest Reports</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Image Showcase -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 bg-slate-900 group">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1000&q=80" 
+                             alt="Happy children receiving books" 
+                             class="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-6 space-y-2">
+                            <span class="px-2.5 py-1 rounded bg-amber-500 text-navy-950 font-bold text-xs uppercase tracking-wider">Featured Field Update</span>
+                            <h3 class="font-serif text-xl font-bold text-white leading-snug">New Educational & Discipleship Center Opened</h3>
+                            <p class="text-xs text-slate-300">Providing 180 vulnerable children with daily hot meals, tutoring, Bibles, and safe recreation space.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Four Core Pillars Section -->
+    <section id="pillars" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-amber-600 font-bold text-xs uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Our Whole-Child Strategy</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-navy-900">Four Pillars of Transformation</h2>
+                <p class="text-slate-600 text-base">We minister to the entire child—ensuring no area of growth or survival is left behind.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Spiritual -->
+                <div class="glass-card rounded-2xl p-6 shadow-md border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
+                        <i data-lucide="book-open-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">1. Spiritual Growth</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Bible study, Sunday school, prayer circles, and Christ-centered youth mentorship.</p>
+                </div>
+
+                <!-- Educational -->
+                <div class="glass-card rounded-2xl p-6 shadow-md border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
+                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">2. Educational Support</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">School tuition coverage, uniform kits, textbooks, and after-school tutoring.</p>
+                </div>
+
+                <!-- Economic -->
+                <div class="glass-card rounded-2xl p-6 shadow-md border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
+                        <i data-lucide="utensils" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">3. Economic Relief</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Daily hot meal programs, routine medical checkups, and youth vocational workshops.</p>
+                </div>
+
+                <!-- Social -->
+                <div class="glass-card rounded-2xl p-6 shadow-md border border-slate-200">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">4. Social Upliftment</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Peer mentorship, team sports, leadership training, and anti-bullying counseling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports & News Feed Section -->
+    <section id="reports" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+                <div>
+                    <span class="text-amber-400 font-bold text-xs uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Field News</span>
+                    <h2 class="font-serif text-3xl font-extrabold text-white mt-2">Activity Posts & Reports</h2>
+                </div>
+                <button onclick="toggleAdminModal()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-xs flex items-center gap-2 self-start md:self-auto">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Post New Update (Admin)
+                </button>
+            </div>
+
+            <!-- Posts Dynamic Container -->
+            <div id="activity-posts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-600 font-bold text-xs uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Visual Testimonies</span>
+                <h2 class="font-serif text-3xl font-extrabold text-navy-900 mt-2">Ministry Photo Gallery</h2>
+            </div>
+            <div id="gallery-grid" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Javascript populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Prayer Requests & Interactive Wall Section -->
+    <section id="prayer-wall" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-amber-600 font-bold text-xs uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Join Us In Prayer</span>
+                        <h2 class="font-serif text-3xl font-extrabold text-navy-900 mt-2">Ministry Prayer Wall</h2>
+                        <p class="text-slate-600 text-sm mt-2">"The prayer of a righteous person is powerful and effective." — James 5:16.</p>
+                    </div>
+
+                    <form id="prayer-form" onsubmit="handlePrayerSubmit(event)" class="glass-card p-6 rounded-2xl shadow-md space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Your Name</label>
+                            <input type="text" id="prayer-author" required placeholder="e.g., Sister Mary or Anonymous" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Prayer Intentions / Comments</label>
+                            <textarea id="prayer-text" rows="3" required placeholder="Write your prayer request or comments for the ministry..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-xl bg-navy-950 hover:bg-navy-900 text-white font-bold text-sm transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i> Post Prayer / Comment
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-4">Community Comments & Prayers</h3>
+                    <div id="prayer-feed" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        <!-- Javascript populated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN & CONFIGURATION MODAL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+            <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Login View -->
+            <div id="admin-login-view" class="space-y-6">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="lock" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-navy-900">Admin Sign In</h3>
+                    <p class="text-slate-500 text-sm">Sign in to publish posts, photos, manage site configuration & view notifications.</p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4 max-w-sm mx-auto">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Username</label>
+                        <input type="text" id="admin-user" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="admin">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                        <input type="password" id="admin-pass" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold rounded-xl text-sm transition-all shadow-md">Sign In as Admin</button>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard View -->
+            <div id="admin-dashboard-view" class="hidden space-y-6">
+                <div class="flex items-center justify-between border-b pb-4 border-slate-200">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-navy-900">Admin Portal</h3>
+                        <span class="text-xs text-emerald-600 font-semibold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Authenticated Session</span>
+                    </div>
+                    <button onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-lg border border-red-200 text-red-600 text-xs font-semibold hover:bg-red-50">Logout</button>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="flex border-b border-slate-200 text-xs font-semibold text-slate-500">
+                    <button onclick="switchAdminTab('publish')" id="tab-publish" class="px-4 py-2 border-b-2 border-amber-500 text-amber-600 font-bold">Post Activity & Photos</button>
+                    <button onclick="switchAdminTab('notifications')" id="tab-notifications" class="px-4 py-2 border-b-2 border-transparent hover:text-slate-800">Notifications (<span id="notif-count">0</span>)</button>
+                    <button onclick="switchAdminTab('config')" id="tab-config" class="px-4 py-2 border-b-2 border-transparent hover:text-slate-800">Site Configuration</button>
+                    <button onclick="switchAdminTab('security')" id="tab-security" class="px-4 py-2 border-b-2 border-transparent hover:text-slate-800">Change Password</button>
+                </div>
+
+                <!-- Tab 1: Publish Form -->
+                <div id="admin-panel-publish" class="space-y-4">
+                    <form onsubmit="handlePublishPost(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Post / Photo Title</label>
+                            <input type="text" id="post-title" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="e.g., School Uniform Distribution Drive">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+                                <select id="post-category" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+                                    <option value="Education">Educational</option>
+                                    <option value="Spiritual">Spiritual</option>
+                                    <option value="Economic">Economic Relief</option>
+                                    <option value="Social">Social</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Image URL</label>
+                                <input type="url" id="post-image" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Content / Report Summary</label>
+                            <textarea id="post-desc" rows="3" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="Describe the activity outcome, impact stats, or story..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-navy-950 text-white font-bold rounded-xl text-sm hover:bg-navy-900 transition-all">Publish Live to Website</button>
+                    </form>
+                </div>
+
+                <!-- Tab 2: Notifications & Comments -->
+                <div id="admin-panel-notifications" class="hidden space-y-3">
+                    <p class="text-xs text-slate-500">Here are recent comments and prayer intentions posted by visitors:</p>
+                    <div id="admin-comments-list" class="space-y-2 max-h-60 overflow-y-auto">
+                        <!-- Javascript populated -->
+                    </div>
+                </div>
+
+                <!-- Tab 3: Configuration -->
+                <div id="admin-panel-config" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Ministry Title</label>
+                        <input type="text" id="cfg-title" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" value="GOSPEL MINISTRY">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Subtitle</label>
+                        <input type="text" id="cfg-subtitle" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" value="For Christ">
+                    </div>
+                    <button onclick="saveSiteConfig()" class="w-full py-2.5 bg-amber-500 text-navy-950 font-bold rounded-xl text-xs hover:bg-amber-400">Save Configurations</button>
+                </div>
+
+                <!-- Tab 4: Security / Change Password Panel -->
+                <div id="admin-panel-security" class="hidden space-y-4">
+                    <form onsubmit="handleChangePassword(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Current Password</label>
+                            <input type="password" id="curr-pass" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">New Password</label>
+                            <input type="password" id="new-pass" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
+                            <input type="password" id="confirm-pass" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <button type="submit" class="w-full py-2.5 bg-amber-500 text-navy-950 font-bold rounded-xl text-xs hover:bg-amber-400 transition-all">
+                            Update Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data Logic -->
+    <script>
+        // Initial State & Persistent Data Management
+        let state = {
+            isAdmin: false,
+            adminCreds: JSON.parse(localStorage.getItem('gmc_admin_creds')) || {
+                username: "admin",
+                password: "admin123"
+            },
+            posts: JSON.parse(localStorage.getItem('gmc_posts')) || [
+                {
+                    id: 1,
+                    title: "Uniform & Textbook Distribution Drive",
+                    category: "Education",
+                    date: "Recent",
+                    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+                    description: "Provided 120 elementary students with full school uniforms, backpacks, and curriculum workbooks for the upcoming academic semester."
+                },
+                {
+                    id: 2,
+                    title: "Youth Worship & Scripture Fellowship",
+                    category: "Spiritual",
+                    date: "Recent",
+                    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80",
+                    description: "Over 80 children gathered for weekend gospel worship, Bible memorization games, and communal prayer."
+                }
+            ],
+            prayers: JSON.parse(localStorage.getItem('gmc_prayers')) || [
+                { id: 1, author: "Sister Hannah", text: "Praying for good health for all children and teachers in the community center.", count: 14 }
+            ]
+        };
+
+        // Render Functions
+        function renderPosts() {
+            const container = document.getElementById('activity-posts-grid');
+            const gallery = document.getElementById('gallery-grid');
+            
+            container.innerHTML = state.posts.map(post => `
+                <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/80 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                        <div class="p-6 space-y-2">
+                            <span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-semibold text-xs border border-amber-500/30">${post.category}</span>
+                            <h3 class="font-serif font-bold text-lg text-white">${post.title}</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">${post.description}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 text-xs text-slate-400 border-t border-slate-700/50 flex justify-between items-center">
+                        <span>${post.date}</span>
+                        <span class="text-amber-400 font-semibold">GospelMinistryForChrist</span>
+                    </div>
+                </div>
+            `).join('');
+
+            gallery.innerHTML = state.posts.map(post => `
+                <div class="relative group rounded-xl overflow-hidden shadow-md h-48 bg-slate-900">
+                    <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-navy-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                        <p class="text-xs text-white font-semibold line-clamp-2">${post.title}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPrayers() {
+            const feed = document.getElementById('prayer-feed');
+            const adminList = document.getElementById('admin-comments-list');
+            document.getElementById('notif-count').innerText = state.prayers.length;
+
+            if (state.prayers.length > 0) {
+                document.getElementById('admin-badge').classList.remove('hidden');
+            }
+
+            feed.innerHTML = state.prayers.map(p => `
+                <div class="glass-card p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-navy-900 text-sm">${p.author}</span>
+                        <button onclick="prayFor(${p.id})" class="text-xs font-semibold px-2.5 py-1 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors">
+                            🙏 Prayed (${p.count})
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">${p.text}</p>
+                </div>
+            `).join('');
+
+            adminList.innerHTML = state.prayers.map(p => `
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-bold text-slate-800">${p.author}</p>
+                        <p class="text-xs text-slate-600">${p.text}</p>
+                    </div>
+                    <button onclick="deletePrayer(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-semibold">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        // Action Handlers
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('admin-user').value;
+            const p = document.getElementById('admin-pass').value;
+
+            if (u === state.adminCreds.username && p === state.adminCreds.password) {
+                state.isAdmin = true;
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                document.getElementById('admin-btn-label').innerText = "Admin Portal (Active)";
+                showToast("Signed in as Admin!");
+            } else {
+                showToast("Invalid Credentials");
+            }
+        }
+
+        function handleAdminLogout() {
+            state.isAdmin = false;
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-btn-label').innerText = "Staff / Admin Login";
+            toggleAdminModal();
+            showToast("Logged out");
+        }
+
+        function handleChangePassword(e) {
+            e.preventDefault();
+            const currentP = document.getElementById('curr-pass').value;
+            const newP = document.getElementById('new-pass').value;
+            const confirmP = document.getElementById('confirm-pass').value;
+
+            if (currentP !== state.adminCreds.password) {
+                showToast("Incorrect current password!");
+                return;
+            }
+
+            if (newP !== confirmP) {
+                showToast("New passwords do not match!");
+                return;
+            }
+
+            if (newP.length < 6) {
+                showToast("Password must be at least 6 characters!");
+                return;
+            }
+
+            // Update stored password
+            state.adminCreds.password = newP;
+            localStorage.setItem('gmc_admin_creds', JSON.stringify(state.adminCreds));
+            
+            showToast("Password updated successfully!");
+            e.target.reset();
+        }
+
+        function handlePublishPost(e) {
+            e.preventDefault();
+            const newPost = {
+                id: Date.now(),
+                title: document.getElementById('post-title').value,
+                category: document.getElementById('post-category').value,
+                image: document.getElementById('post-image').value,
+                description: document.getElementById('post-desc').value,
+                date: new Date().toLocaleDateString()
+            };
+            state.posts.unshift(newPost);
+            localStorage.setItem('gmc_posts', JSON.stringify(state.posts));
+            renderPosts();
+            toggleAdminModal();
+            showToast("New activity published live!");
+            e.target.reset();
+        }
+
+        function handlePrayerSubmit(e) {
+            e.preventDefault();
+            const newPrayer = {
+                id: Date.now(),
+                author: document.getElementById('prayer-author').value,
+                text: document.getElementById('prayer-text').value,
+                count: 1
+            };
+            state.prayers.unshift(newPrayer);
+            localStorage.setItem('gmc_prayers', JSON.stringify(state.prayers));
+            renderPrayers();
+            showToast("Comment / Prayer intention published!");
+            e.target.reset();
+        }
+
+        function prayFor(id) {
+            const item = state.prayers.find(p => p.id === id);
+            if (item) {
+                item.count++;
+                localStorage.setItem('gmc_prayers', JSON.stringify(state.prayers));
+                renderPrayers();
+            }
+        }
+
+        function deletePrayer(id) {
+            state.prayers = state.prayers.filter(p => p.id !== id);
+            localStorage.setItem('gmc_prayers', JSON.stringify(state.prayers));
+            renderPrayers();
+            showToast("Comment deleted.");
+        }
+
+        function saveSiteConfig() {
+            const t = document.getElementById('cfg-title').value;
+            const s = document.getElementById('cfg-subtitle').value;
+            document.getElementById('site-title-text').innerText = t;
+            document.getElementById('site-subtitle-text').innerText = s;
+            showToast("Site configuration saved!");
+            toggleAdminModal();
+        }
+
+        // UI Modal & Tab Toggles
+        function toggleAdminModal() {
+            document.getElementById('admin-modal').classList.toggle('hidden');
+        }
+
+        function switchAdminTab(tab) {
+            ['publish', 'notifications', 'config', 'security'].forEach(t => {
+                const panel = document.getElementById(`admin-panel-${t}`);
+                const tabBtn = document.getElementById(`tab-${t}`);
+                if (panel) panel.classList.add('hidden');
+                if (tabBtn) tabBtn.className = "px-4 py-2 border-b-2 border-transparent hover:text-slate-800";
+            });
+
+            document.getElementById(`admin-panel-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).className = "px-4 py-2 border-b-2 border-amber-500 text-amber-600 font-bold";
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-navy-950 text-amber-400 border border-amber-500/30 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2 pointer-events-auto transition-all duration-300';
+            toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> ${msg}`;
+            container.appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderPosts();
+            renderPrayers();
+        });
+    </script>
+	<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
